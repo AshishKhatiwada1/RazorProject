@@ -1,0 +1,147 @@
+@{
+     var db = Database.Open("jbData");
+     var selectQueryString = "";
+     var quote="'";
+     var dr=req
+
+}
+
+
+
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+    <!-- BEGIN HEAD -->
+    <head>
+        <meta charset="utf-8"/>
+        <title>JaggaBikri</title>
+       
+        <!-- GLOBAL MANDATORY STYLES -->
+        
+        <link href="vendor/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- PAGE LEVEL PLUGIN STYLES -->
+        <link href="css/animate.css" rel="stylesheet">
+        <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- THEME STYLES -->
+        <link href="css/layout.min.css" rel="stylesheet" type="text/css"/>
+
+       
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BODY -->
+    <body style="background-color: black">
+    <div style="height: 96px;margin-top: 0px; background-color:white;">
+     </div>
+    
+        <!--========== HEADER ==========-->
+        <header class="header navbar-fixed-top">
+            <!-- Navbar -->
+            <nav class="navbar" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="menu-container">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="toggle-icon"></span>
+                        </button>
+
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a class="logo-wrap" href="index.cshtml">
+                                <img class="logo-img logo-img-main" src="img/logo.png" alt="Jagga Bikri">
+                                <img class="logo-img logo-img-active" src="img/logo-dark.png" alt="Jagga Bikri">
+                            </a>
+                        </div>
+                        <!-- End Logo -->
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse nav-collapse">
+                        <div class="menu-container" style="color: black">
+                            <ul class="navbar-nav navbar-nav-right">
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover " href="index.cshtml"style="color: grey">Home</a></li>
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover" href="search.cshtml"style="color: grey">Search</a></li>
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover" href="about.cshtml"style="color: grey">About</a></li>
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover" href="contact.cshtml"style="color: grey">Contact</a></li>
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover active" href="signup.cshtml"style="color: grey">Profile</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Navbar Collapse -->
+                </div>
+            </nav>
+            <!-- Navbar -->
+        </header>
+        <!--========== END HEADER ==========-->
+
+        <!--========== SLIDER ==========-->
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <div class="container">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                </ol>
+            </div>
+
+            <form>  
+                       <div>
+                           
+                            <h2 class="color-white">jagga info</h2>
+                            <input type="text" class="form-control footer-input margin-b-20"  placeholder="developement region" name="tbDr" required>
+                            <input type="text" class="form-control footer-input margin-b-20" placeholder="zone" name="tbZone" required>
+                            <input type="text" class="form-control footer-input margin-b-20" placeholder="city" name="tbCity" required>
+                            <input type="number" class="form-control footer-input margin-b-20" placeholder="ward no." name="tbWard" required>
+                            <input type="text" class="form-control footer-input margin-b-20" placeholder="first name" name="tbFname" required>
+                           <input type="text" class="form-control footer-input margin-b-20" placeholder="last name" name="tbLname" required>
+                           <input type="number" class="form-control footer-input margin-b-20" placeholder="land square meter" name="tbLandSqm" required>
+                           <input type="number" class="form-control footer-input margin-b-20" placeholder="price" name="tbPrice" required>
+                            <font style="color:white"> Choose image File </font>
+                           
+                           <input  type="file" name="fileToUpload" id="fileToUpload">
+                           
+                          
+                           <button type="submit" class="btn-theme btn-theme-sm btn-base-bg text-uppercase">submit</button>
+                        </div>
+                     </form>  
+
+        <!--========== PAGE LAYOUT ==========-->
+      <footer class="footer">
+            <div class="content container">
+                @{var a="@";}
+                    <h1 style="text-align: center; float: left; padding-right: 200px;padding-left: 300px;">@a JAGGABIKRI 2017</h1>
+                    <h1>Follow Us:</h1>
+                
+               
+                <!--// end row -->
+            </div>
+        </footer>
+        <!-- End Work -->
+        <!--========== END PAGE LAYOUT ==========-->
+
+       
+
+        <!-- Back To Top -->
+        <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+
+        <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+        <!-- CORE PLUGINS -->
+        <script src="vendor/jquery.min.js" type="text/javascript"></script>
+        
+        <script src="vendor/bootstrap.min.js" type="text/javascript"></script>
+
+        <!-- PAGE LEVEL PLUGINS -->
+       
+
+        <!-- PAGE LEVEL SCRIPTS -->
+        
+
+    </body>
+    <!-- END BODY -->
+</html>

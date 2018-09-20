@@ -1,0 +1,210 @@
+﻿
+@using Microsoft.Web.Helpers
+
+            @{
+                if (Session["userPhotoHalnaChanxa"] == "1")
+                {
+                    var fileName = "";
+                    var db1 = Database.Open("jbData");
+                    if (IsPost)
+                    {
+                        string q2222 = Session["sqlQueryPhotoHalnaKoLagi"].ToString();
+                        foreach (var row2 in db1.Query(q2222))
+                        {
+                            int s1 = row2.ID;
+                            string ssssss111 = s1.ToString();
+                            Session["LandIDNo"] = ssssss111;
+                        }
+                        var fileSavePath = "";
+                        var uploadedFile = Request.Files[0];
+                        fileName = Session["LandIDNo"].ToString()+".jpg";
+                        fileSavePath = Server.MapPath("~/img/Land/" + fileName);
+                        uploadedFile.SaveAs(fileSavePath);
+                    }
+                    
+                    
+                    if (IsPost)
+                    {
+                <span>File uploaded!</span>
+                    }
+                }
+            }
+
+
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+    <!-- BEGIN HEAD -->
+    <head>
+        <meta charset="utf-8"/>
+        <title>JaggaBikri</title>
+       
+        <!-- GLOBAL MANDATORY STYLES -->
+        
+        <link href="vendor/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- PAGE LEVEL PLUGIN STYLES -->
+        <link href="css/animate.css" rel="stylesheet">
+        <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- THEME STYLES -->
+        <link href="css/layout.min.css" rel="stylesheet" type="text/css"/>
+
+       
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BODY -->
+   <body style="background-color:#17202a">
+    @RenderPage("header.cshtml")
+
+        @{
+    if ((int)Session["id"]!=0)
+    {
+
+        if (IsPost)
+        {
+            var db = Database.Open("jbData");
+            
+            var selectQueryString1 = "";
+            var selectQueryString = "";
+            int iduser;
+            iduser = (int)Session["id"];
+            var quote = "'";
+            var dr = Request["tbDr"];
+            var zone = Request["tbZone"];
+            if ((dr!=null)&&zone!=null)
+            {
+
+                dr = quote + dr;
+                dr = dr + quote;
+
+                zone.ToLower();
+                string longittude = Request["tblongitude"];
+                string lattitude = Request["tblattitude"];
+                zone = quote + zone;
+                zone = zone + quote;
+                var ward = Request["tbWard"];
+                var fname = Request["tbFname"];
+                fname.ToLower();
+                fname = quote + fname;
+                fname = fname + quote;
+                var lname = Request["tbLname"];
+                lname.ToLower();
+                lname = quote + lname;
+                lname = lname + quote;
+                var landsqm = Request["tbLandSqm"];
+                var price = Request["tbPrice"];
+                var district = Request["tbDistrict"];
+                district.ToLower();
+                district = quote + district;
+                district = district + quote;
+                var city = Request["tbCity"];
+                city.ToLower();
+                city = quote + city;
+                city = city + quote;
+                var tbBigha = Request["tbBigha"];
+                var tbKattha = Request["tbKattha"];
+                var tbDhur = Request["tbDhur"];
+                float dhur = 0;
+                if (tbBigha!=null && tbBigha!=null)
+                {
+                    float tBigha=float.Parse(tbBigha);
+                    dhur = 400 * tBigha;
+                }
+                if (tbKattha!=null && tbKattha!="")
+                {
+                    float tKattha = float.Parse(tbKattha);
+                    dhur = 20 * tKattha + dhur;
+                }
+                if (tbDhur!=null && tbDhur!="")
+                {
+                    float tDhur = float.Parse(tbDhur);
+                    dhur = dhur + tDhur;
+                }
+                
+                selectQueryString = "insert into Land(IdUser,Dr,Zone,District,City,WardNo,LandSqm,Price,FirstName,LastName) values (" + iduser + "," + dr + "," + zone + "," + district + "," + city + "," + ward + "," + dhur+ "," + price + "," + fname + "," + lname +")";
+                db.Query(selectQueryString);
+                selectQueryString1 = "";
+                selectQueryString1 = "select ID,IdUser,Dr from Land where IdUser = " + iduser + " and Dr = " + dr + " and Zone = " + zone + " and District = " + district + " and City = " + city + " and WardNo = " + ward + " and LandSqm = " + dhur + " and Price = " + price + " and FirstName = " + fname + " and LastName = " + lname ;
+                Session["sqlQueryPhotoHalnaKoLagi"] = "";
+                Session["sqlQueryPhotoHalnaKoLagi"] = selectQueryString1;
+                Session["userPhotoHalnaChanxa"] = "1";
+                
+            }
+            
+            
+            
+            
+        }
+        
+    }
+    
+     
+}
+
+
+
+
+
+        <!--========== END HEADER ==========-->
+
+        <!--========== SLIDER ==========-->
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <div class="container">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                </ol>
+            </div>
+            @{
+                if (Session["userPhotoHalnaChanxa"] == "0")
+                {
+
+                  <p>  @RenderPage("postPhoto.cshtml")</p>
+                    
+                    
+                    
+                }
+                
+            }
+            
+           
+            <p>You can only upload single photo per land</p> 
+                        @FileUpload.GetHtml(
+                        initialNumberOfFiles:1,
+                        allowMoreFilesToBeAdded:false,
+                        includeFormTag:true,
+                        uploadText:"Upload")
+           
+
+
+
+            <!--========== PAGE LAYOUT ==========-->
+      @RenderPage("footer.cshtml")
+        <!-- End Work -->
+        <!--========== END PAGE LAYOUT ==========-->
+
+
+        <!-- Back To Top -->
+        <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+
+        <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+        <!-- CORE PLUGINS -->
+        <script src="vendor/jquery.min.js" type="text/javascript"></script>
+        
+        <script src="vendor/bootstrap.min.js" type="text/javascript"></script>
+
+        <!-- PAGE LEVEL PLUGINS -->
+       
+
+        <!-- PAGE LEVEL SCRIPTS -->
+        
+
+    </body>
+    <!-- END BODY -->
+</html>

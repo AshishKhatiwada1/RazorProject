@@ -1,0 +1,427 @@
+﻿@using Microsoft.Web.Helpers
+@using Microsoft.Web.Infrastructure
+@{
+    var quotes = "%'";
+    var db = Database.Open("jbData");
+    var selectQueryString = "";
+
+
+    string landSquareMeter1 = null;
+    string oLname;
+    string minPrice;
+    string maxPrice;
+    string DevelopmentR;
+    string zone;
+    string city;
+    string ward;
+    string oFname;
+    string district;
+    string landSquareMeter;
+    string equalto = " = ";
+    string mmPrice;
+
+
+
+
+    string sQlandSq = "";
+    string sQolname = "";
+    string sQprice = "";
+    string sQdr = "";
+    string sQzone = "";
+    string sQcity = "";
+    string sQward = "";
+    string sQofname = "";
+    string sQdistrict = "";
+
+    if (IsPost)
+    {
+        string lk = " like '%";
+
+        landSquareMeter1 = Request["tbsqm"];
+        if (landSquareMeter1 == "")
+        {
+            landSquareMeter1 = null;
+        }
+        oLname = Request["tbolname"];
+        if (oLname == "")
+        {
+            oLname = null;
+        }
+        minPrice = Request["tbminprice"];
+        if (minPrice == "")
+        {
+            minPrice = null;
+        }
+        maxPrice = Request["tbmaxprice"];
+        if (maxPrice == "")
+        {
+            maxPrice = null;
+        }
+        DevelopmentR = Request["tbdr"];
+        if (DevelopmentR == "")
+        {
+            DevelopmentR = null;
+        }
+        zone = Request["tbzone"];
+        if (zone == "")
+        {
+            zone = null;
+        }
+        city = Request["tbcity"];
+        if (city == "")
+        {
+            city = null;
+        }
+        ward = Request["tbwardno"];
+        if (ward == "")
+        {
+            ward = null;
+        }
+        oFname = Request["tbofname"];
+        if (oFname == "")
+        {
+            oFname = null;
+        }
+        district = Request["tbdistrict"];
+        if (district == "")
+        {
+            district = null;
+        }
+
+
+
+
+
+        landSquareMeter = landSquareMeter1;
+
+        if ((landSquareMeter == null) && (landSquareMeter == null))
+        {
+            landSquareMeter = "BETWEEN 1 AND 999999999";
+            sQlandSq = "select City,LandSqm,Price,FirstName,LastName from Land where LandSqm >=1 and LandSqm <= 999999999";
+
+
+
+
+        }
+        else
+        {
+            landSquareMeter = lk + landSquareMeter + quotes;
+            int sqml = Int32.Parse(landSquareMeter);
+            sQlandSq = "select City,LandSqm,Price,FirstName,LastName from Land where LandSqm = " + sqml;
+
+        }
+
+
+
+
+
+
+
+        if (oLname != null)
+        {
+            oLname.ToLower();
+
+            oLname = lk + oLname + quotes;
+            sQolname = "select City,LandSqm,Price,FirstName,LastName from Land where LastName = " + oLname;
+
+        }
+        else
+        {
+            oLname = "BETWEEN 'A' AND 'z'";
+            sQolname = "select City,LandSqm,Price,FirstName,LastName from Land where LastName BETWEEN 'A' AND 'z'";
+        }
+
+
+
+
+
+        if (minPrice == null)
+        {
+            minPrice = "0";
+        }
+
+
+        if (maxPrice == null)
+        {
+            maxPrice = "999999999999999";
+
+        }
+        mmPrice = "BETWEEN " + minPrice + " AND " + maxPrice;
+        sQprice = "select City,LandSqm,Price,FirstName,LastName from Land where Price BETWEEN " + minPrice + " AND " + maxPrice;
+
+
+
+
+
+        if (DevelopmentR != null)
+        {
+            DevelopmentR.ToLower();
+
+            DevelopmentR = lk + DevelopmentR + quotes;
+            sQdr = "select City,LandSqm,Price,FirstName,LastName from Land where Dr = " + DevelopmentR;
+        }
+        else
+        {
+            DevelopmentR = "BETWEEN 'A' AND 'z'";
+            sQdr = "select City,LandSqm,Price,FirstName,LastName from Land where Dr BETWEEN 'A' AND 'z'";
+        }
+
+
+
+        if (zone != null)
+        {
+            zone.ToLower();
+
+            zone = lk + zone + quotes;
+            sQzone = "select City,LandSqm,Price,FirstName,LastName from Land where Zone = " + zone;
+        }
+        else
+        {
+            zone = "BETWEEN 'A' AND 'z'";
+            sQzone = "select City,LandSqm,Price,FirstName,LastName from Land where Zone BETWEEN 'A' AND 'z'";
+        }
+
+
+
+        if (city != null)
+        {
+            city.ToLower();
+
+            city = lk + city + quotes;
+            sQcity = "select City,LandSqm,Price,FirstName,LastName from Land where City = " + city;
+        }
+        else
+        {
+            city = "BETWEEN 'A' AND 'z'";
+            sQcity = "select City,LandSqm,Price,FirstName,LastName from Land where City BETWEEN 'A' AND 'z'";
+        }
+
+
+
+
+        if (ward != null)
+        {
+            ward = equalto + ward;
+            sQward = "select City,LandSqm,Price,FirstName,LastName from Land where WardNo = " + ward;
+        }
+        else
+        {
+
+            ward = "BETWEEN 0 AND 10000000";
+            sQward = "select City,LandSqm,Price,FirstName,LastName from Land where WardNo BETWEEN 0 AND 10000000";
+        }
+
+
+
+
+        if (oFname != null)
+        {
+            oFname.ToLower();
+
+            oFname = lk + oFname + quotes;
+            sQofname = "select City,LandSqm,Price,FirstName,LastName from Land where FirstName = " + oFname;
+        }
+        else
+        {
+            oFname = "BETWEEN 'A' AND 'z'";
+            sQofname = "select City,LandSqm,Price,FirstName,LastName from Land where FirstName BETWEEN 'A' AND 'z'";
+        }
+
+
+
+
+        if (district != null)
+        {
+            district.ToLower();
+
+            district = lk + district + quotes;
+            sQdistrict = "select City,LandSqm,Price,FirstName,LastName from Land where District = " + district;
+        }
+        else
+        {
+            district = "BETWEEN 'A' AND 'z'";
+            sQdistrict = "select City,LandSqm,Price,FirstName,LastName from Land where District BETWEEN 'A' AND 'z'";
+        }
+
+
+
+
+
+
+
+
+
+
+        selectQueryString = "select IdUser,ID, City,LandSqm,Price,FirstName,LastName from Land where LandSqm " + landSquareMeter + " AND  Dr " + DevelopmentR + " AND  Zone " + zone + " AND  District " + district + " AND  City " + city + " AND  WardNo " + ward + " AND  Price " + mmPrice + " AND  FirstName " + oFname + " AND  LastName " + oLname;
+        db.Query(selectQueryString);
+
+    }
+    
+    
+}
+
+
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>JaggaBikri</title>
+
+    <!-- GLOBAL MANDATORY STYLES -->
+
+    <link href="vendor/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- PAGE LEVEL PLUGIN STYLES -->
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME STYLES -->
+    <link href="css/layout.min.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+<!-- END HEAD -->
+
+<!-- BODY -->
+<body style="background-color:#17202a">
+        @RenderPage("header.cshtml");
+        <!--========== END HEADER ==========-->
+
+
+    @{
+        if (IsPost == false)
+        {
+        <!--========== PARALLAX ==========-->
+        <div class="parallax-window" data-parallax="scroll" data-image-src="img/1920x1080/01.jpg">
+            <div class="parallax-content container">
+                <h1 class="carousel-title">Advanced Search of Desired land</h1>
+                <p>
+                    It is easy.<br />
+                    Select the affordable price and locatable land.<br />
+                    Best results will be shown for you.
+                </p>
+            </div>
+        </div>
+        <!--========== PARALLAX ==========-->
+
+        <!--========== PAGE LAYOUT ==========-->
+                
+                
+        <form method="post">
+            <div class="col-sm-5 sm-margin-b-30" style="margin-top: 0px; background-color:#17202a; margin-bottom: 40px; width: 100%">
+                <h2 class="color-white">Search</h2>
+                <h3>According to Prices:</h3>
+                <input type="number" class="form-control footer-input margin-b-20" placeholder="Minimum Price " name="tbminprice">
+                <input type="number" class="form-control footer-input margin-b-20" placeholder="Maximum Price " name="tbmaxprice">
+                <h3>According to Places:</h3>
+                <input type="text" class="form-control footer-input margin-b-20" placeholder="Name of Development region eg:-EDR, Eastern developmental region etc. Leave as it is for ALL" name="tbdr">
+                <input type="text" class="form-control footer-input margin-b-20" placeholder="Name of Zone eg:- Mechi , Koshi etc. Leave as it is for ALL" name="tbzone">
+                <input type="text" class="form-control footer-input margin-b-20" placeholder="Name of District eg:- Morang,Jhapa etc. Leave as it is for ALL" name="tbdistrict">
+                <input type="text" class="form-control footer-input margin-b-20" placeholder="Name of City eg:- Biratnagar,pokhara,etc. Leave as it is for ALL" name="tbcity">
+                <input type="number" class="form-control footer-input margin-b-20" placeholder="Ward number. Leave as it is for ALL" name="tbwardno">
+                <h3>According to owner:</h3>
+                <input type="text" class="form-control footer-input margin-b-20" placeholder="Owner's First Name eg:- ram ,hari ,sita etc.  Leave as it is for ALL" name="tbofname">
+                <input type="text" class="form-control footer-input margin-b-20" placeholder="Owner's Last Name eg:- thapa,rai etc.  Leave as it is for ALL" name="tbolname">
+                <h3>According to land's square meter:</h3>
+                <input type="text" class="form-control footer-input margin-b-20" placeholder="eg:- 500, 10000,232442 etc.  Leave as it is for ALL " name="tbsqm">
+                @Request["tbsqm"]
+
+                <button type="submit" class="btn-theme btn-theme-sm btn-base-bg text-uppercase">Search</button>
+            </div>
+        </form>
+            }
+            else
+            {
+                
+        <div class="parallax-window" data-parallax="scroll" data-image-src="img/1920x1080/01.jpg">
+            <div class="parallax-content container">
+                <h1 class="carousel-title">Search Results</h1>
+
+            </div>
+        </div>
+                foreach (var row in db.Query(selectQueryString))
+                {
+
+
+                    string userimage = "";
+                    int usrimgint = row.ID;
+                    userimage =  usrimgint.ToString() + ".jpg";
+                    float dhrr = @row.LandSqm;
+                    float dhuur = dhrr;
+                    float bigha = dhuur / 400;
+                    float kattha = dhuur / 20;
+                    float dhur = dhuur;
+                    
+                   
+            <div class="row">
+                <!-- Team -->
+                <div class="col-sm-5 sm-margin-b-50" style="margin-left: 30%; margin-right: 30%;">
+                    <div class="bg-color-white margin-b-20">
+                        <div class="wow zoomIn" data-wow-duration=".3" data-wow-delay=".1s">
+                              <img  class="img-responsive" src="img/Land/@userimage" alt="New Land Image" />
+                        </div>
+                    </div>
+                    <h4><a href="Profile.cshtml?iduser=@row.IdUser&fname=@row.FirstName&lname=@row.LastName">@row.FirstName @row.LastName</a> <span class="text-uppercase margin-l-20">Place= @row.City </span></h4>
+                    <p>
+                        <h3>Price = @row.Price</h3>
+                    </p>
+                    <p>In terms of Bigha = @bigha</p>
+                    <p>In terms of Kattha = @kattha</p>
+                    <p>In terms of Dhur = @dhur</p>
+                    <a class="link" href="bid.cshtml?fname=@row.FirstName&lname=@row.LastName&landid=@row.ID&userid=@row.IdUser&price=@row.Price&city=@row.City&landsqm=@row.LandSqm">Read More/Bid</a>
+                </div>
+                <!-- End Team -->
+
+            </div>
+
+
+
+            <!--// end row -->
+      
+                    
+                    
+                    
+                }
+
+
+
+
+
+
+
+            }
+            
+    }
+
+
+
+
+    <!--========== END PAGE LAYOUT ==========-->
+
+
+    @RenderPage("footer.cshtml");
+  
+       
+
+       <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+
+    <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- CORE PLUGINS -->
+    <script src="vendor/jquery.min.js" type="text/javascript"></script>
+
+    <script src="vendor/bootstrap.min.js" type="text/javascript"></script>
+
+    <!-- PAGE LEVEL PLUGINS -->
+
+
+    <!-- PAGE LEVEL SCRIPTS -->
+
+
+</body>
+<!-- END BODY -->
+</html>

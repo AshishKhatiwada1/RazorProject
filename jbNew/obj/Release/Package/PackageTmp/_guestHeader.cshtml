@@ -1,0 +1,86 @@
+﻿
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- BEGIN HEAD -->
+    <head>
+        <meta charset="utf-8"/>
+        <title>JaggaBikri</title>
+       
+        <!-- GLOBAL MANDATORY STYLES -->
+        
+        <link href="vendor/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- PAGE LEVEL PLUGIN STYLES -->
+        <link href="css/animate.css" rel="stylesheet">
+        <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- THEME STYLES -->
+        <link href="css/layout.min.css" rel="stylesheet" type="text/css"/>
+
+       
+    </head>
+    <!-- END HEAD -->
+<body>
+                    <!-- START HEAD -->
+
+    <div style="height: 96px;margin-top: 0px; background-color:white;">
+     </div>
+     
+        <!--========== HEADER ==========-->
+        <header class="header navbar-fixed-top">
+            <!-- Navbar -->
+            <nav class="navbar" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="menu-container">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="toggle-icon"></span>
+                        </button>
+
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a class="logo-wrap" href="index.cshtml">
+                                <img class="logo-img logo-img-main" src="img/logo.png" alt="Jagga Bikri">
+                                <img class="logo-img logo-img-active" src="img/logo-dark.png" alt="Jagga Bikri">
+                                
+                            </a>
+                        </div>
+                        <!-- End Logo -->
+                    </div>
+                    
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse nav-collapse">
+                        <div class="menu-container" style="color: black">
+                            <ul class="navbar-nav navbar-nav-right">
+                                <li>Welcome @Session["userName"].ToString()</li>
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover " href="index.cshtml"style="color: grey">Home</a></li>
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover" href="search.cshtml"style="color: grey">Search</a></li>
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover" href="about.cshtml"style="color: grey">About</a></li>
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover" href="contact.cshtml"style="color: grey">Contact</a></li>
+                                <li class="nav-item"><a class="nav-item-child nav-item-hover " href="signup.cshtml"style="color: grey">Login/Signup</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Navbar Collapse -->
+                </div>
+            </nav>
+            <!-- Navbar -->
+        </header>
+        <!--========== END HEADER ==========-->
+
+
+
+
+           <!-- END HEADER -->
+
+     <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+
+        <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+        <!-- CORE PLUGINS -->
+        <script src="vendor/jquery.min.js" type="text/javascript"></script>
+        
+        <script src="vendor/bootstrap.min.js" type="text/javascript"></script>
+</body>
+</html>

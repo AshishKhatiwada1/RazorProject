@@ -1,0 +1,117 @@
+﻿ @using Microsoft.Web.Helpers
+@using Microsoft.Web.Infrastructure
+
+
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>JaggaBikri</title>
+
+    <!-- GLOBAL MANDATORY STYLES -->
+
+    <link href="vendor/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- PAGE LEVEL PLUGIN STYLES -->
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME STYLES -->
+    <link href="css/layout.min.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+<!-- END HEAD -->
+<body>
+    @RenderPage("header.cshtml")
+
+    @{
+    var quotes = "%'";
+    var idsession = Session["id"];
+    string idsession123 = idsession.ToString() + ".jpg";
+    var db = Database.Open("jbData");
+    var selectQueryString = "select * from Land where IdUser="+idsession;
+    }
+
+   
+                   
+            <div class="row">
+                <!-- Team -->
+                <div class="col-sm-5 sm-margin-b-50" style="margin-left: 0; margin-right: 0;">
+                    
+                              <img  class="img-responsive" src="img/Users/@idsession123" alt="user Profile imange" width="33%" />
+                        </div>
+                   
+               
+            </div>
+
+         <h4><a href="uploadPhoto.cshtml" class="btn-theme btn-theme-sm btn-base-bg text-uppercase">Change Prof Pic</a></h4>
+    
+
+
+
+
+
+
+   
+
+    @{
+     foreach (var row in db.Query(selectQueryString))
+                {
+
+
+                    string userimage = "";
+                    int usrimgint = row.ID;
+                    userimage =  usrimgint.ToString() + ".jpg";
+                    float dhrr = @row.LandSqm;
+                    float dhuur = dhrr;
+                    float bigha = dhuur / 400;
+                    float kattha = dhuur / 20;
+                    float dhur = dhuur;
+                    
+                   
+            <div class="row">
+                <!-- Team -->
+                <div class="col-sm-5 sm-margin-b-50" style="margin-left: 30%; margin-right: 30%;">
+                    <div class="bg-color-white margin-b-20">
+                        <div class="wow zoomIn" data-wow-duration=".3" data-wow-delay=".1s">
+                              <img  class="img-responsive" src="img/Land/@userimage" alt="New Land Image" />
+                        </div>
+                    </div>
+                    <h4><a href="Profile.cshtml?iduser=@row.IdUser&fname=@row.FirstName&lname=@row.LastName">@row.FirstName @row.LastName</a> <span class="text-uppercase margin-l-20">Place= @row.City </span></h4>
+                    <p>
+                        <h3>Price = @row.Price</h3>
+                    </p>
+                    <p>In terms of Bigha = @bigha</p>
+                    <p>In terms of Kattha = @kattha</p>
+                    <p>In terms of Dhur = @dhur</p>
+                    <a class="link" href="bid.cshtml?fname=@row.FirstName&lname=@row.LastName&landid=@row.ID&userid=@row.IdUser&price=@row.Price&city=@row.City&landsqm=@row.LandSqm">View Bid</a>
+                </div>
+                <!-- End Team -->
+
+            </div>
+    }
+        
+        <!----End Page Layout----->
+     @RenderPage("footer.cshtml");
+  
+       
+
+       <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+
+    <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- CORE PLUGINS -->
+    <script src="vendor/jquery.min.js" type="text/javascript"></script>
+
+    <script src="vendor/bootstrap.min.js" type="text/javascript"></script>
+
+    <!-- PAGE LEVEL PLUGINS -->
+
+
+    <!-- PAGE LEVEL SCRIPTS -->
+    }
+</body>
+</html>

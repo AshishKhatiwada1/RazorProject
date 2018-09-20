@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+    <!-- BEGIN HEAD -->
+    <head>
+        <meta charset="utf-8"/>
+        <title>JaggaBikri</title>
+       
+        <!-- GLOBAL MANDATORY STYLES -->
+        
+        <link href="vendor/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- PAGE LEVEL PLUGIN STYLES -->
+        <link href="css/animate.css" rel="stylesheet">
+        <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- THEME STYLES -->
+        <link href="css/layout.min.css" rel="stylesheet" type="text/css"/>
+
+       
+    </head>
+    <!-- END HEAD -->
+
+    <!-- BODY -->
+   <body style="background-color:#17202a">
+    @RenderPage("header.cshtml")
+        <!--========== END HEADER ==========-->
+       @{string email="jagabikri@gmail.com";}
+        <!--========== PARALLAX ==========-->
+        <div class="parallax-window" data-parallax="scroll" data-image-src="img/1920x1080/01.jpg">
+            <div class="parallax-content container">
+                <h1 class="carousel-title">Contact</h1>
+                <p>You can contact us by phone:9800921846 <br/>Direct email contact : @email</p>
+            </div>
+        </div>
+        <!--========== PARALLAX ==========-->
+
+        <!--========== PAGE LAYOUT ==========-->
+        <!-- Contact List -->
+        <div class="section-seperator">
+            <div class="content-lg container">
+                <div class="row">
+                    <!-- Contact List -->
+                    <div class="col-sm-4 sm-margin-b-50">
+                        <div class="wow fadeInLeft" data-wow-duration=".3" data-wow-delay=".3s">
+                            <h3><a href="#">Biratnagar</a> <span class="text-uppercase margin-l-20">Head Office</span></h3>
+                            <p></p>
+                            <ul class="list-unstyled contact-list">
+                                <li><i class="margin-r-10 color-base icon-call-out"></i> 9842046031</li>
+                                <li><i class="margin-r-10 color-base icon-envelope"></i> @email</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Contact List -->
+
+                    <!-- Contact List -->
+                    <div class="col-sm-4 sm-margin-b-50">
+                        <div class="wow fadeInLeft" data-wow-duration=".3" data-wow-delay=".3s">
+                            <h3><a href="#">Aims</a> <span class="text-uppercase margin-l-20">Operation</span></h3>
+                            <p></p>
+                            <ul class="list-unstyled contact-list">
+                                <li><i class="margin-r-10 color-base icon-call-out"></i> 021471846</li>
+                                <li><i class="margin-r-10 color-base icon-envelope"></i> @email</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Contact List -->
+
+                   
+                </div>
+                <!--// end row -->
+            </div>
+        </div>
+        <!-- End Contact List -->
+
+        <!-- Google Map -->
+        <div id="map" class="map height-400"></div>
+
+        <!-- Promo Section -->
+        <div class="promo-section overflow-h">
+            <div class="container">
+                <div class="clearfix">
+                    <div class="ver-center">
+                        <div class="ver-center-aligned">
+                            <div class="promo-section-col">
+                                <h2>Our Users</h2>
+                                <p>I have posted my description about my land and i got a very good deal.</p>
+                                <p>I will be posting about my all land on this website and i hope that i will found a very good deal too.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="promo-section-img-right">
+                <img class="img-responsive" src="img/970x970/01.jpg" alt="Content Image">
+            </div>
+        </div>
+        <!-- End Promo Section -->
+        <!--========== END PAGE LAYOUT ==========-->
+
+       
+        @RenderPage("footer.cshtml")
+        <!--========== END FOOTER ==========-->
+
+        <!-- Back To Top -->
+       
+      <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+
+        <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+        <!-- CORE PLUGINS -->
+        <script src="vendor/jquery.min.js" type="text/javascript"></script>
+        
+        <script src="vendor/bootstrap.min.js" type="text/javascript"></script>
+
+        <!-- PAGE LEVEL PLUGINS -->
+       
+
+        <!-- PAGE LEVEL SCRIPTS -->
+        
+
+    </body>
+    <!-- END BODY -->
+</html>

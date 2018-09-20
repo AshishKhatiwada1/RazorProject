@@ -1,0 +1,99 @@
+﻿@{
+    var nameCurrentlyLogged = "";
+    var db = Database.Open("jbData");
+    var db1 = Database.Open("jbData");
+    var selectQueryString = "";
+    string landid = Request.QueryString["landid"];
+    string userid = Request.QueryString["userid"];
+    string posterfname = Request.QueryString["fname"];
+    string posterlname = Request.QueryString["lname"];
+    string checkpost = "0";
+    string bidderid = Session["id"].ToString();
+    if (IsPost)
+    {
+        string currentlylogged =Session["id"].ToString();
+        var selectQueryString1 = "select Name from UserInfo where ID=" + currentlylogged;
+        foreach (var keys in db1.Query(selectQueryString1))
+        {
+            nameCurrentlyLogged = keys.Name;
+        }
+
+
+        nameCurrentlyLogged = "'" + nameCurrentlyLogged + "'";
+        
+        
+        string bidprice = Request["tbprice"];
+       
+        selectQueryString = "insert into Bidding(PropId,UserId,Price,Name) values (" + landid + "," + bidderid + "," + bidprice +","+nameCurrentlyLogged+ ")";
+        db.Query(selectQueryString);
+        checkpost = "1";
+        
+    }
+    
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- BEGIN HEAD -->
+    <head>
+        <meta charset="utf-8"/>
+        <title>JaggaBikri</title>
+       
+        <!-- GLOBAL MANDATORY STYLES -->
+        
+        <link href="vendor/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- PAGE LEVEL PLUGIN STYLES -->
+        <link href="css/animate.css" rel="stylesheet">
+        <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- THEME STYLES -->
+        <link href="css/layout.min.css" rel="stylesheet" type="text/css"/>
+
+       
+    </head>
+    <!-- END HEAD -->
+<body style="background-color:#17202a">
+    @RenderPage("header.cshtml");
+
+
+     @{
+         if (checkpost=="0")
+         {
+             <form method="post">
+         <div class="parallax-content container">
+        <input type="number" class="form-control footer-input margin-b-20" placeholder="Price" name="tbprice" required />
+             
+                <button type="submit" class="btn-theme btn-theme-sm btn-base-bg text-uppercase" name="btnlogin">Bid On This</button>
+                
+            </div>
+
+        
+    </form>
+         }
+
+         else
+         {
+              <h2 class="color-white">Your bid has been sucessfully Posted .</h2>
+
+         }
+     }
+     
+    
+   
+   
+
+
+    @RenderPage("footer.cshtml");
+
+    
+     <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+
+        <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+        <!-- CORE PLUGINS -->
+        <script src="vendor/jquery.min.js" type="text/javascript"></script>
+        
+        <script src="vendor/bootstrap.min.js" type="text/javascript"></script>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="jbDataModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="jbDataModelStoreContainer">
+    <EntitySet Name="Bidding" EntityType="jbDataModel.Store.Bidding" store:Type="Tables" />
+    <EntitySet Name="Land" EntityType="jbDataModel.Store.Land" store:Type="Tables" />
+    <EntitySet Name="UserInfo" EntityType="jbDataModel.Store.UserInfo" store:Type="Tables" />
+    <AssociationSet Name="biddingRelation" Association="jbDataModel.Store.biddingRelation">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="Bidding" EntitySet="Bidding" />
+    </AssociationSet>
+    <AssociationSet Name="UserToJagga" Association="jbDataModel.Store.UserToJagga">
+      <End Role="UserInfo" EntitySet="UserInfo" />
+      <End Role="Land" EntitySet="Land" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bidding">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="PropId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="PropId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Price" Type="int" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
+            warning 6035: The relationship 'biddingRelation2' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+            -->
+  <EntityType Name="Land">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="IdUser" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="int" Nullable="false" />
+    <Property Name="Dr" Type="nvarchar" MaxLength="100" />
+    <Property Name="Zone" Type="nvarchar" MaxLength="100" />
+    <Property Name="District" Type="nvarchar" MaxLength="100" />
+    <Property Name="City" Type="nvarchar" MaxLength="100" />
+    <Property Name="WardNo" Type="int" />
+    <Property Name="LandSqm" Type="int" />
+    <Property Name="Price" Type="int" />
+    <Property Name="Longitude" Type="nvarchar" MaxLength="100" />
+    <Property Name="Latitude" Type="nvarchar" MaxLength="100" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="UserInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="100" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" />
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="login" Type="bit" />
+  </EntityType>
+  <Association Name="biddingRelation">
+    <End Role="UserInfo" Type="jbDataModel.Store.UserInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Bidding" Type="jbDataModel.Store.Bidding" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bidding">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserToJagga">
+    <End Role="UserInfo" Type="jbDataModel.Store.UserInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Land" Type="jbDataModel.Store.Land" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Land">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

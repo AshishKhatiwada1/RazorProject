@@ -1,0 +1,169 @@
+﻿
+@{
+    
+        string landid = Request.QueryString["landid"];
+        string userid = Request.QueryString["userid"];
+        string fname = Request.QueryString["fname"];
+        string lname = Request.QueryString["lname"];
+        string city = Request.QueryString["city"];
+        string price = Request.QueryString["price"];
+        string landsqm = Request.QueryString["landsqm"];
+        string imagesource = landid + ".jpg";
+        WebImage.GetImageFromRequest();
+        var db = Database.Open("jbData");
+        var selectQueryString = "select PropId,UserId,Price,Name from Bidding where PropId="+landid+" order by Price DESC";
+        var db1 = Database.Open("jbData");
+        
+        
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>JaggaBikri</title>
+
+    <!-- GLOBAL MANDATORY STYLES -->
+
+    <link href="vendor/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- PAGE LEVEL PLUGIN STYLES -->
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME STYLES -->
+    <link href="css/layout.min.css" rel="stylesheet" type="text/css" />
+
+
+
+   
+
+
+</head>
+<!-- END HEAD -->
+<body style="background-color:#17202a">
+    @RenderPage("header.cshtml")
+
+
+    @{
+       
+            
+                if ((int)Session["id"] != 0)
+                        {
+     
+       
+
+
+
+    <div class="bg-color-sky-light">
+        <div class="content-lg container">
+            <div class="row margin-b-40">
+                <div class="col-sm-6">
+                    <h2>Place = @city</h2>
+                    <p>Price=@price </p>
+                    <p>Owner's Name=@fname @lname </p>
+                </div>
+            </div>
+            <!--// end row -->
+
+            <div class="row">
+                <!-- Team -->
+                <div class="col-sm-5 sm-margin-b-50">
+                    <div class="bg-color-white margin-b-20">
+                        <div class="wow zoomIn" data-wow-duration=".3" data-wow-delay=".1s">
+                            <img class="img-responsive" src="img/Users/@imagesource" alt="land Image"/>
+                        </div>
+                    </div>
+                    <h4><a href="#">land Square meter = @landsqm</a> <span class="text-uppercase margin-l-20"></span></h4>
+                    <p></p>
+                    <a class="link" href="#"></a>
+                </div>
+                <!-- End Team -->
+            </div>
+           
+        </div>
+    </div>
+    <hr />
+     <div id="googleMap" style="width:100%;height:400px;"></div>
+
+<script>
+function myMap() {
+var mapProp= {
+    center:new google.maps.LatLng(51.508742,-0.120850),
+    zoom:5,
+};
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACYAX2XNvIWHpgyx7VMIdvpvrXkNt5wfU&callback=myMap"></script>
+
+    <hr />
+
+   
+        
+   
+     foreach (var row in db1.Query(selectQueryString))
+     {
+         //string userkonam=row.Name;
+         //string bidkoprice=row.Price;
+         //string jaggakoid=row.PropId;
+         //string userkoid=row.UserId;
+        
+             <div class="row">
+                <!-- Team -->
+                
+                <h4 class="col-sm-5 sm-margin-b-30">Bidder Name =@row.Name <br />  Bid Price=@row.Price </h4>
+
+            </div>
+       
+                    <h4><a href="Profile.cshtml?iduser=@row.UserId&name=@row.Name" class="btn-theme btn-theme-sm btn-base-bg text-uppercase">View Profile</a></h4>
+                    
+               
+               
+         }
+         
+       
+            
+
+            
+
+
+
+    
+             
+    
+     
+
+
+     <div class="bg-color-sky-light">
+        <div class="content-lg container">
+            
+            <h4><a href="addbid.cshtml?fname=@fname&lname=@lname&landid=@landid&iduser=@userid&price=@price&city=@city&landsqm=@landsqm" class="btn-theme btn-theme-sm btn-base-bg text-uppercase">Bid On This</a></h4>
+            
+            </div>
+         </div>
+   
+         @RenderPage("footer.cshtml")
+
+       }
+       
+        else
+        {
+        <p><h1>Please login or signup to view or bid specefic land</h1></p>
+        @RenderPage("signup.cshtml")
+        }  
+        }
+
+    @*       END FOOTER*@
+
+    <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+
+    <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- CORE PLUGINS -->
+    <script src="vendor/jquery.min.js" type="text/javascript"></script>
+
+    <script src="vendor/bootstrap.min.js" type="text/javascript"></script>
+</body>
+</html>

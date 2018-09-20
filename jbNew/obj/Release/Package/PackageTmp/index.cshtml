@@ -1,0 +1,287 @@
+﻿@{
+    var db = Database.Open("jbData");
+    var selectQueryString = "";
+    var selectQueryStringSearch = "";
+    int searchFlag = 0;
+    if (IsPost)
+    {
+
+
+        string lpassword = Request["tblpassword"];
+        string lname = Request["tblname"];
+        string city = Request["tbcity"];
+        string minprice = Request["tbminprice"];
+        string maxprice = Request["tbmaxprice"];
+        string scity = city;
+        string smaxprice = maxprice;
+        string sminprice = minprice;
+        string spass = lpassword;
+        string suser = lname;
+        string price;
+        if ((lpassword != null) && (lname != null))
+        {
+            var tempPassword = lpassword;
+            string temp = "'";
+            lname = temp + lname;
+            lname = lname + temp;
+
+            lpassword = temp + lpassword;
+            lpassword = lpassword + temp;
+            selectQueryString = "select Password from UserInfo where Name=" + lname + " and Password=" + lpassword;
+
+            foreach (var row in db.Query(selectQueryString))
+            {
+
+
+
+                if (row.Password == tempPassword)
+                {
+                    Response.Write("Password is correct");
+                    Session.Remove("id");
+                    Session.Remove("userName");
+                    Session.Remove("password");
+                    Session["userName"] = suser;
+                    Session["password"] = spass;
+                    Session["userPhotoHalnaChanxa"] = "0";
+                    selectQueryString = "select ID from UserInfo where Name=" + lname + " and Password=" + lpassword;
+                    foreach (var row2 in db.Query(selectQueryString))
+                    {
+                        Session["id"] = row2.ID;
+                    }
+
+
+
+
+
+                }
+
+            }
+
+
+
+
+        }
+
+
+        else
+        {
+            if (scity == "")
+            {
+                scity = null;
+            }
+            if (sminprice == "")
+            {
+                sminprice = null;
+            }
+            if (smaxprice == "")
+            {
+                smaxprice = null;
+            }
+
+            if (scity == null)
+            {
+                scity = " BETWEEN 'A' AND 'z' ";
+            }
+            else
+            {
+                scity = "LIKE '%" + scity + "%'";
+            }
+            if (smaxprice == null)
+            {
+                smaxprice = "999999999999";
+            }
+            if (sminprice == null)
+            {
+                sminprice = "0";
+            }
+            price = "BETWEEN " + sminprice + " AND " + smaxprice;
+
+            selectQueryStringSearch = "select IdUser,ID,City,LandSqm,Price,FirstName,LastName from Land where Price " + price + " AND city " + scity;
+            searchFlag = 1;
+
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>JaggaBikri</title>
+
+    <!-- GLOBAL MANDATORY STYLES -->
+
+    <link href="vendor/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- PAGE LEVEL PLUGIN STYLES -->
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="vendor/swiper/css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- THEME STYLES -->
+    <link href="css/layout.min.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+<!-- END HEAD -->
+
+<!-- BODY -->
+<body style="background-color:#17202a">
+
+
+    @RenderPage("header.cshtml")
+    <!--========== END HEADER ==========-->
+    \
+        <div>
+            <div style="height: 350px; width: auto; float: left;">
+                <img src="img/newhome.jpg" alt="homepage" style="">
+                <hr />
+            </div>
+
+
+
+            <form method="post">
+                <div class="col-sm-5 sm-margin-b-30" style="height: 345px;width:auto; position: relative; float: right;">
+                    <h2 class="color-white">Login</h2>
+                    <h3>
+                        <label for="uname">Username:</label></h3>
+                    <input type="text" class="form-control footer-input margin-b-20" placeholder="userName" id="uname" name="tblname" required>
+                    <h3>
+                        <label for="Puname">Password:</label></h3>
+                    <input type="password" class="form-control footer-input margin-b-20" placeholder="password" id="Puname" name="tblpassword" required>
+                    <button type="submit" class="btn-theme btn-theme-sm btn-base-bg text-uppercase">Login</button>
+
+                    <div style=" width: auto; float: right;">
+
+                       <h4><a href="signup.cshtml" class="btn-theme btn-theme-sm btn-base-bg text-uppercase">Sign Up</a></h4>
+
+                    </div>
+                    <hr />
+                </div>
+            </form>
+        </div>
+    
+    <div class="content" style="height: 400px; margin-top: 350px;">
+        <div style="width: auto; line-height: 0px; float: left;">
+
+            <h2>WELCOME TO JAGGABIKRI</h2>
+            <br>
+            <h4><font face="arvo">
+                    This is a content for jagga bikri . In this portion we will show how we behave and what our website will do. Generally
+                    we will try to recieve a list of sellers to our website by website promotion and then the seller will have to contact each 
+                    and indivudual buyers themselves we will only form the platform for buyers and sellers to connect. Seller and buyer can view 
+                    all the info about each other.we will try to recieve a list of sellers to our website by website promotion and then the seller will have to contact each 
+                    </font>
+            </h4>
+        </div>
+        <div >
+            <form method="post">
+                <div class="col-sm-5 sm-margin-b-30" style="height: 345px; position: relative; float: right;">
+                    <h2 class="color-white">QUICK PROPERTY SEARCH</h2>
+                    <h3>
+                        <label for="sArea">City/Area</label></h3>
+                    <input type="text" class="form-control footer-input margin-b-20" placeholder="eg:-Biratnagar" id="sArea" name="tbcity">
+                    <h3>
+                        <label for="minprice">Price in Rs:</label></h3>
+                   
+                     <div style="width: auto;">
+                        <label>MaxPrice:</label>
+                        <input type="number" class="form-control footer-input margin-b-20" placeholder="MAX price(eg= 500000)" id="maxprice" name="tbmaxprice">
+                    </div>
+                    <div style="width: auto;">
+                        <label>MinPrice:</label>
+                        <input type="number" class="form-control footer-input margin-b-20" placeholder="MIN price(eg= 500000)" id="minprice" name="tbminprice">
+                    </div>
+
+                    <button type="submit" class="btn-theme btn-theme-sm btn-base-bg text-uppercase">Search</button>
+                </div>
+            </form>
+
+        </div>
+         
+    </div>
+    <hr>
+  
+
+    @{
+        if (searchFlag == 1)
+        {
+
+
+            foreach (var row in db.Query(selectQueryStringSearch))
+            {
+
+
+                    string userimage = "";
+                    int usrimgint = row.ID;
+                    userimage =  usrimgint.ToString() + ".jpg";
+                    float dhrr = @row.LandSqm;
+                    float dhuur = dhrr;
+                    float bigha = dhuur / 400;
+                    float kattha = dhuur / 20;
+                    float dhur = dhuur;
+                   
+            <div class="row">
+                <!-- Team -->
+                <div class="col-sm-5 sm-margin-b-50" style="margin-left: 30%; margin-right: 30%;">
+                    <div class="bg-color-white margin-b-20">
+                        <div class="wow zoomIn" data-wow-duration=".3" data-wow-delay=".1s">
+                              <img  class="img-responsive" src="img/Land/@userimage" alt="New Land Image" />
+                        </div>
+                    </div>
+                    <h4><a href="Profile.cshtml?iduser=@row.IdUser&fname=@row.FirstName&lname=@row.LastName">@row.FirstName @row.LastName</a> <span class="text-uppercase margin-l-20">Place= @row.City </span></h4>
+                    <p>
+                        <h3>Price = @row.Price</h3>
+                    </p>
+                    <p>In terms of Bigha = @bigha</p>
+                    <p>In terms of Kattha = @kattha</p>
+                    <p>In terms of Dhur = @dhur</p>
+                   
+                </div>
+                <!-- End Team -->
+
+            </div>
+
+
+
+            <!--// end row -->
+                    
+                    
+                    
+            }
+
+
+
+        }
+    }
+
+
+
+
+    <div 
+        style="margin-bottom:4px;padding-bottom:2em;margin-top:600px"
+        >
+         @RenderPage("footer.cshtml")
+    </div>
+  
+
+    <a href="javascript:void(0);" class="js-back-to-top back-to-top">Top</a>
+
+    <!-- JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- CORE PLUGINS -->
+    <script src="vendor/jquery.min.js" type="text/javascript"></script>
+
+    <script src="vendor/bootstrap.min.js" type="text/javascript"></script>
+</body>
+</html>

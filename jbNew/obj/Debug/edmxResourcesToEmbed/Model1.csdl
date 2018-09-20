@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="jbDataModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="jbDataEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Biddings" EntityType="jbDataModel.Bidding" />
+    <EntitySet Name="Lands" EntityType="jbDataModel.Land" />
+    <EntitySet Name="UserInfoes" EntityType="jbDataModel.UserInfo" />
+    <AssociationSet Name="biddingRelation" Association="jbDataModel.biddingRelation">
+      <End Role="UserInfo" EntitySet="UserInfoes" />
+      <End Role="Bidding" EntitySet="Biddings" />
+    </AssociationSet>
+    <AssociationSet Name="UserToJagga" Association="jbDataModel.UserToJagga">
+      <End Role="UserInfo" EntitySet="UserInfoes" />
+      <End Role="Land" EntitySet="Lands" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bidding">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="PropId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="PropId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="UserInfo" Relationship="jbDataModel.biddingRelation" FromRole="Bidding" ToRole="UserInfo" />
+  </EntityType>
+  <EntityType Name="Land">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="IdUser" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="Int32" Nullable="false" />
+    <Property Name="Dr" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Zone" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="District" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="WardNo" Type="Int32" />
+    <Property Name="LandSqm" Type="Int32" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Longitude" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Latitude" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="FirstName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="UserInfo" Relationship="jbDataModel.UserToJagga" FromRole="Land" ToRole="UserInfo" />
+  </EntityType>
+  <EntityType Name="UserInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="login" Type="Boolean" />
+    <NavigationProperty Name="Biddings" Relationship="jbDataModel.biddingRelation" FromRole="UserInfo" ToRole="Bidding" />
+    <NavigationProperty Name="Lands" Relationship="jbDataModel.UserToJagga" FromRole="UserInfo" ToRole="Land" />
+  </EntityType>
+  <Association Name="biddingRelation">
+    <End Role="UserInfo" Type="jbDataModel.UserInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Bidding" Type="jbDataModel.Bidding" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bidding">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserToJagga">
+    <End Role="UserInfo" Type="jbDataModel.UserInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Land" Type="jbDataModel.Land" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Land">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
